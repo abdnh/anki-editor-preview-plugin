@@ -139,8 +139,8 @@ class EditorPreview(object):
         else:
             origin.editor_preview.hide()
 
-    def _obtainCardText(self, note):
-        c = note.ephemeral_card()
+    def _obtainCardText(self, editor):
+        c = editor.note.ephemeral_card(ord=editor.card.ord if editor.card else 0)
         a = mw.prepare_card_text_for_display(c.answer())
         a = gui_hooks.card_will_show(a, c, "clayoutAnswer")
         bodyclass = theme_manager.body_classes_for_card_ord(c.ord, theme_manager.night_mode)
@@ -155,6 +155,6 @@ class EditorPreview(object):
                 self.refresh(editor)
 
     def refresh(self, editor):
-        editor.editor_preview.eval(self._obtainCardText(editor.note))
+        editor.editor_preview.eval(self._obtainCardText(editor))
 
 eprev = EditorPreview()
